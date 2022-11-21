@@ -8,7 +8,7 @@ class UserHelper
     @selected_weapon_types = []
     #  Change these to arrays 
     @selected_gender = "Any Gender"
-    @selected_race = "Any Race"
+    @selected_races = []
   end
 
   def selected_weapon_types
@@ -19,15 +19,15 @@ class UserHelper
     @selected_gender
   end
 
-  def selected_race
-    @selected_race
+  def selected_races
+    @selected_races
   end
 
    def selected_gender=(input)
     @selected_gender=input
   end
 
-  def selected_race=(input)
+  def selected_races=(input)
     @selected_race=input
   end
 
