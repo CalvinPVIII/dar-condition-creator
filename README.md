@@ -1,3 +1,1 @@
-Using JRuby 9.3.9, Shoes 4, and nokogiri for XML parsing
-
-jruby -S gem install nokogiri
+### DAR Condition Creator is currently under development
