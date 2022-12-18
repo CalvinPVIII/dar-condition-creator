@@ -5,7 +5,7 @@ import { Window, App, Text } from "proton-native";
 
 export default function Main() {
   const chosenConditions = new Conditions();
-  console.log(chosenConditions);
+  console.log();
   return (
     <App>
       <Window style={{ width: 800, height: 600 }}>

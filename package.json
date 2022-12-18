@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "proton-native": "^2.0.4",
-    "xml2js": "^0.4.23"
+    "xml2js": "^0.4.23",
+    "zip-folder": "^1.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
