@@ -2,7 +2,7 @@ const fs = require("fs");
 const { exec } = require("child_process");
 const xml2js = require("xml2js");
 
- class FileHelper {
+class FileHelper {
   static espToXml(filePath) {
     const newFileName = `OriginalFile${filePath.slice(-4)}`;
     // copy file to conversion folder
@@ -60,7 +60,7 @@ const xml2js = require("xml2js");
   }
 }
 
-module.export = FileHelper
+module.export = FileHelper;
 // example usage
-// FileHelper.espToXml("./src/Test Esp Lightsabers.esp")
+// FileHelper.espToXml("./src/Test Esp Lightsabers.esp");
 // FileHelper.getItemsFromXML("conversion/ConvertedFile.XML", "WEAP");
