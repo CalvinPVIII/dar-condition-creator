@@ -1,6 +1,24 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require("electron");
+const FileHelper = require("./src/FileHelper.js");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
+
+ipcMain.handle("convertFile", async (event, data) => {
+  console.log("mainjs: ");
+  console.log(FileHelper.espToXml(data));
+  const result = await FileHelper.espToXml(data);
+  // console.log("result: " + result);
+  return result;
+});
+
+ipcMain.handle("getItemsFromXml", async (event, data) => {
+  const result = await FileHelper.getItemsFromXml(
+    "./conversion/ConvertedFile.XML",
+    "WEAP"
+  );
+  console.log(result);
+  return result;
+});
 
 function createWindow() {
   // Create the browser window.
@@ -8,6 +26,9 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: true,
+      contextIsolation: false,
       preload: path.join(__dirname, "preload.js"),
     },
   });
