@@ -4,8 +4,6 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 
 ipcMain.handle("convertFile", async (event, data) => {
-  console.log("mainjs: ");
-  console.log(FileHelper.espToXml(data));
   const result = await FileHelper.espToXml(data);
   // console.log("result: " + result);
   return result;

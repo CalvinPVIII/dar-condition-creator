@@ -34,7 +34,7 @@ class FileHelper {
 
   static getItemsFromXml(filePath, itemType) {
     return new Promise((resolve, reject) => {
-      const itemObj = {};
+      const itemArray = [];
       // open file
       fs.readFile(filePath, "utf8", (error, data) => {
         if (error) {
@@ -51,13 +51,15 @@ class FileHelper {
               const items = result.plugin["GRUP"].filter(
                 (group) => group["$"].label === itemType
               )[0][itemType];
-              // add each item to itemObj to return later
+              // add each item to itemArray to return later
               items.forEach((item) => {
                 const id = `0x${item["$"].id.slice(2)}`;
-                itemObj[id] = item.FULL[0];
+                const obj = { itemId: id, itemName: item.FULL[0] };
+
+                itemArray.push(obj);
               });
-              // console.log(itemObj);
-              resolve(itemObj);
+
+              resolve(itemArray);
             }
           });
         }
