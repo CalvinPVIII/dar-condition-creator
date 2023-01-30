@@ -1,15 +1,17 @@
 import { useState } from "react";
-import PluginItems from "./PluginItems";
+
+import WeaponFileSelect from "./WeaponFileSelect";
+import ArmorFileSelect from "./ArmorFileSelect";
+import SpellFileSelect from "./SpellFileSelect";
 const { ipcRenderer } = window.require("electron");
-export default function FileSelect() {
+
+export default function FileSelect(props) {
   const [fileSelectResult, setFileSelectResult] = useState(false);
 
   const onFileUpload = async (e) => {
     ipcRenderer.invoke("convertFile", e.target.files[0].path).then((result) => {
-      console.log(result);
       if (result === "Success") {
-        ipcRenderer.invoke("getItemsFromXml").then((res) => {
-          // console.log(res);
+        ipcRenderer.invoke("getItemsFromXml", props.itemType).then((res) => {
           setFileSelectResult(res);
         });
       } else {
@@ -25,7 +27,21 @@ export default function FileSelect() {
         onChange={(e) => onFileUpload(e)}
         accept=".esp, .esl, .esm"
       />
-      {fileSelectResult ? <PluginItems items={fileSelectResult} /> : <></>}
+      {fileSelectResult && props.itemType === "WEAP" ? (
+        <>
+          <WeaponFileSelect fileSelectResult={fileSelectResult} />
+        </>
+      ) : fileSelectResult && props.itemType === "ARMO" ? (
+        <>
+          <ArmorFileSelect />
+        </>
+      ) : fileSelectResult && props.itemType === "SPEL" ? (
+        <>
+          <SpellFileSelect />
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

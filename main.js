@@ -9,10 +9,11 @@ ipcMain.handle("convertFile", async (event, data) => {
   return result;
 });
 
-ipcMain.handle("getItemsFromXml", async (event, data) => {
+ipcMain.handle("getItemsFromXml", async (event, itemType) => {
+  console.log(itemType);
   const result = await FileHelper.getItemsFromXml(
     "./conversion/ConvertedFile.XML",
-    "WEAP"
+    itemType
   );
   console.log(result);
   return result;

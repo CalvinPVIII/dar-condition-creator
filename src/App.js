@@ -1,11 +1,11 @@
 import "./App.css";
-import FileSelect from "./Components/FileSelect";
+import Home from "./Components/Home";
 
 function App() {
   return (
     <div className="App">
       <h1>DAR Condition Creator</h1>
-      <FileSelect />
+      <Home />
     </div>
   );
 }
