@@ -3,4 +3,12 @@ export default class Conditions {
   rightHandWeapons = [];
   excludedLeftHandWeapons = [];
   excludedRightHandWeapons = [];
+
+  equippedArmor = [];
+  excludedArmor = [];
+
+  leftHandSpells = [];
+  rightHandSpells = [];
+  excludedLeftHandSpells = [];
+  excludedRightHandSpells = [];
 }

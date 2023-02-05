@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import WeaponFileSelect from "./WeaponFileSelect";
 import ArmorFileSelect from "./ArmorFileSelect";
-import SpellFileSelect from "./SpellFileSelect";
 const { ipcRenderer } = window.require("electron");
 
 export default function FileSelect(props) {
@@ -12,7 +11,11 @@ export default function FileSelect(props) {
     ipcRenderer.invoke("convertFile", e.target.files[0].path).then((result) => {
       if (result === "Success") {
         ipcRenderer.invoke("getItemsFromXml", props.itemType).then((res) => {
-          setFileSelectResult(res);
+          if (res != "error") {
+            setFileSelectResult(res);
+          } else {
+            return "error";
+          }
         });
       } else {
         return "error";
@@ -29,15 +32,24 @@ export default function FileSelect(props) {
       />
       {fileSelectResult && props.itemType === "WEAP" ? (
         <>
-          <WeaponFileSelect fileSelectResult={fileSelectResult} />
+          <WeaponFileSelect
+            fileSelectResult={fileSelectResult}
+            itemType={props.itemType}
+          />
         </>
       ) : fileSelectResult && props.itemType === "ARMO" ? (
         <>
-          <ArmorFileSelect />
+          <ArmorFileSelect
+            fileSelectResult={fileSelectResult}
+            itemType={props.itemType}
+          />
         </>
       ) : fileSelectResult && props.itemType === "SPEL" ? (
         <>
-          <SpellFileSelect />
+          <WeaponFileSelect
+            fileSelectResult={fileSelectResult}
+            itemType={props.itemType}
+          />
         </>
       ) : (
         <></>

@@ -47,19 +47,24 @@ class FileHelper {
               console.log(err);
               resolve(err);
             } else {
-              // grab only items specified by itemType parameter
-              const items = result.plugin["GRUP"].filter(
-                (group) => group["$"].label === itemType
-              )[0][itemType];
-              // add each item to itemArray to return later
-              items.forEach((item) => {
-                const id = `0x${item["$"].id.slice(2)}`;
-                const obj = { itemId: id, itemName: item.FULL[0] };
+              try {
+                // grab only items specified by itemType parameter
+                const items = result.plugin["GRUP"].filter(
+                  (group) => group["$"].label === itemType
+                )[0][itemType];
+                // add each item to itemArray to return later
+                items.forEach((item) => {
+                  const id = `0x${item["$"].id.slice(2)}`;
+                  const obj = { itemId: id, itemName: item.FULL[0] };
 
-                itemArray.push(obj);
-              });
+                  itemArray.push(obj);
+                });
 
-              resolve(itemArray);
+                resolve(itemArray);
+              } catch (err) {
+                console.log(err);
+                resolve("error");
+              }
             }
           });
         }

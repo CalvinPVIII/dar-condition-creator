@@ -10,7 +10,45 @@ export default function PluginItems(props) {
 
   const initialCheckBoxValues = {};
   props.items.forEach((item) => {
-    initialCheckBoxValues[item.itemId] = false;
+    if (
+      //if the item already has been checked to be added
+      ((currentConditions.rightHandWeapons.some(
+        (listItem) => item.itemId === listItem.itemId
+      ) ||
+        currentConditions.leftHandWeapons.some(
+          (listItem) => item.itemId === listItem.itemId
+        ) ||
+        currentConditions.rightHandSpells.some(
+          (listItem) => item.itemId === listItem.itemId
+        ) ||
+        currentConditions.leftHandSpells.some(
+          (listItem) => item.itemId === listItem.itemId
+        ) ||
+        currentConditions.equippedArmor.some(
+          (listItem) => item.itemId === listItem.itemId
+        )) &&
+        !props.exclude) || // or the item already has been checked to be excluded
+      ((currentConditions.excludedRightHandWeapons.some(
+        (listItem) => item.itemId === listItem.itemId
+      ) ||
+        currentConditions.excludedLeftHandWeapons.some(
+          (listItem) => item.itemId === listItem.itemId
+        ) ||
+        currentConditions.excludedRightHandSpells.some(
+          (listItem) => item.itemId === listItem.itemId
+        ) ||
+        currentConditions.excludedLeftHandSpells.some(
+          (listItem) => item.itemId === listItem.itemId
+        ) ||
+        currentConditions.excludedArmor.some(
+          (listItem) => item.itemId === listItem.itemId
+        )) &&
+        props.exclude)
+    ) {
+      initialCheckBoxValues[item.itemId] = true; // check it on the list
+    } else {
+      initialCheckBoxValues[item.itemId] = false;
+    }
   });
   const [itemCheckBoxStatus, setItemCheckBoxStatus] = useState(
     initialCheckBoxValues
@@ -21,14 +59,37 @@ export default function PluginItems(props) {
   const addSelectionToConditions = (item) => {
     item = { itemId: item.value, itemName: item.name };
     const newConditions = { ...currentConditions };
-    if (props.equippedHand === "right") {
+
+    if (props.itemType === "ARMO") {
       props.exclude
-        ? newConditions.excludedRightHandWeapons.push(item)
-        : newConditions.rightHandWeapons.push(item);
-    } else if (props.equippedHand === "left") {
-      props.exclude
-        ? newConditions.excludedLeftHandWeapons.push(item)
-        : newConditions.leftHandWeapons.push(item);
+        ? newConditions.excludedArmor.push(item)
+        : newConditions.equippedArmor.push(item);
+    }
+
+    if (props.itemType === "SPEL") {
+      console.log(props.itemType);
+      if (props.equippedHand === "right") {
+        props.exclude
+          ? newConditions.excludedRightHandSpells.push(item)
+          : newConditions.rightHandSpells.push(item);
+      } else if (props.equippedHand === "left") {
+        props.exclude
+          ? newConditions.excludedLeftHandSpells.push(item)
+          : newConditions.leftHandSpells.push(item);
+      }
+    }
+
+    if (props.itemType === "WEAP") {
+      // For weapons  in either hand
+      if (props.equippedHand === "right") {
+        props.exclude
+          ? newConditions.excludedRightHandWeapons.push(item)
+          : newConditions.rightHandWeapons.push(item);
+      } else if (props.equippedHand === "left") {
+        props.exclude
+          ? newConditions.excludedLeftHandWeapons.push(item)
+          : newConditions.leftHandWeapons.push(item);
+      }
     }
     setCurrentConditions(newConditions);
   };
@@ -38,26 +99,65 @@ export default function PluginItems(props) {
   const removeSelectionFromConditions = (item) => {
     item = { itemId: item.value, itemName: item.name };
     const newConditions = { ...currentConditions };
-    if (props.equippedHand === "right") {
+
+    if (props.itemType === "ARMO") {
       props.exclude
-        ? newConditions.excludedRightHandWeapons.splice(
-            newConditions.excludedRightHandWeapons.indexOf(item),
+        ? newConditions.excludedArmor.splice(
+            newConditions.excludedArmor.indexOf(item),
             1
           )
-        : newConditions.rightHandWeapons.splice(
-            newConditions.rightHandWeapons.indexOf(item),
+        : newConditions.equippedArmor.splice(
+            newConditions.equippedArmor.indexOf(item),
             1
           );
-    } else if (props.equippedHand === "left") {
-      props.exclude
-        ? newConditions.excludedLeftHandWeapons.splice(
-            newConditions.excludedLeftHandWeapons.indexOf(item),
-            1
-          )
-        : newConditions.leftHandWeapons.splice(
-            newConditions.leftHandWeapons.indexOf(item),
-            1
-          );
+    }
+
+    if (props.itemType === "SPEL") {
+      if (props.equippedHand === "right") {
+        props.exclude
+          ? newConditions.excludedRightHandSpells.splice(
+              newConditions.excludedRightHandSpells.indexOf(item),
+              1
+            )
+          : newConditions.rightHandSpells.splice(
+              newConditions.rightHandSpells.indexOf(item),
+              1
+            );
+      } else if (props.equippedHand === "left") {
+        props.exclude
+          ? newConditions.excludedLeftHandSpells.splice(
+              newConditions.excludedLeftHandSpells.indexOf(item),
+              1
+            )
+          : newConditions.leftHandSpells.splice(
+              newConditions.leftHandSpells.indexOf(item),
+              1
+            );
+      }
+    }
+
+    if (props.itemType === "WEAP") {
+      if (props.equippedHand === "right") {
+        props.exclude
+          ? newConditions.excludedRightHandWeapons.splice(
+              newConditions.excludedRightHandWeapons.indexOf(item),
+              1
+            )
+          : newConditions.rightHandWeapons.splice(
+              newConditions.rightHandWeapons.indexOf(item),
+              1
+            );
+      } else if (props.equippedHand === "left") {
+        props.exclude
+          ? newConditions.excludedLeftHandWeapons.splice(
+              newConditions.excludedLeftHandWeapons.indexOf(item),
+              1
+            )
+          : newConditions.leftHandWeapons.splice(
+              newConditions.leftHandWeapons.indexOf(item),
+              1
+            );
+      }
     }
     setCurrentConditions(newConditions);
   };
