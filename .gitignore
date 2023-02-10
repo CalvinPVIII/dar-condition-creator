@@ -7,7 +7,10 @@
 
 /conversion/ConvertedFile.XML
 /conversion/OriginalFile.esp
+/conversion/OriginalFile.esl
+/conversion/OriginalFile.esm
 /src/test_source_esp.esp
+
 
 # testing
 /coverage

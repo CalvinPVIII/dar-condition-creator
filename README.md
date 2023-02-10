@@ -15,4 +15,6 @@
   - Remove option to add esp?
 - ~~Going back and readding the same ESP should auto check all items already in the currentConditions~~
 
-- Unhandled exception when there are no items of selected type in esp
+- ~~Unhandled exception when there are no items of selected type in esp~~ - Add custom handling for no items of select type in esp?
+
+- Clicking an item in exclude mode switches back to add mode
