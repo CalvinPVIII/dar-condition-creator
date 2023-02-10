@@ -6,9 +6,6 @@ export default function WeaponFileSelect(props) {
   const [rightHandEquipVisibility, setRightHandEquipVisibility] =
     useState("inline");
 
-  const [excludeVisibility, setExcludeVisibility] = useState("none");
-  const [addVisibility, setAddVisibility] = useState("inline");
-
   const setVisibleHand = (hand) => {
     if (hand === "right") {
       setRightHandEquipVisibility("inline");
@@ -20,11 +17,11 @@ export default function WeaponFileSelect(props) {
   };
   const handleExcludeClick = (excludeVisible) => {
     if (excludeVisible) {
-      setExcludeVisibility("inline");
-      setAddVisibility("none");
+      props.setExcludeVisibility("inline");
+      props.setAddVisibility("none");
     } else if (!excludeVisible) {
-      setExcludeVisibility("none");
-      setAddVisibility("inline");
+      props.setExcludeVisibility("none");
+      props.setAddVisibility("inline");
     }
   };
   return (
@@ -39,7 +36,7 @@ export default function WeaponFileSelect(props) {
         </span>
       </h3>
       <label>
-        {excludeVisibility === "none" ? (
+        {props.excludeVisibility === "none" ? (
           <>
             Exclude Items
             <input type="checkbox" onClick={() => handleExcludeClick(true)} />
@@ -53,7 +50,7 @@ export default function WeaponFileSelect(props) {
       </label>
       {props.fileSelectResult ? (
         <>
-          <div className="add-section" style={{ display: addVisibility }}>
+          <div className="add-section" style={{ display: props.addVisibility }}>
             <div
               className="select-right-hand-weapons"
               style={{ display: rightHandEquipVisibility }}
@@ -80,7 +77,7 @@ export default function WeaponFileSelect(props) {
 
           <div
             className="exclude-selection"
-            style={{ display: excludeVisibility }}
+            style={{ display: props.excludeVisibility }}
           >
             <div
               className="select-right-hand-weapons"

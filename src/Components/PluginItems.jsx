@@ -67,7 +67,6 @@ export default function PluginItems(props) {
     }
 
     if (props.itemType === "SPEL") {
-      console.log(props.itemType);
       if (props.equippedHand === "right") {
         props.exclude
           ? newConditions.excludedRightHandSpells.push(item)

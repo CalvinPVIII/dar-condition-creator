@@ -10,6 +10,9 @@ export default function FileSelect(props) {
   const [fileSelectResult, setFileSelectResult] = useState(false);
   const [error, setError] = useState("");
 
+  const [excludeVisibility, setExcludeVisibility] = useState("none");
+  const [addVisibility, setAddVisibility] = useState("inline");
+
   const onFileUpload = async (e) => {
     ipcRenderer.invoke("convertFile", e.target.files[0].path).then((result) => {
       if (result === "Success") {
@@ -45,6 +48,10 @@ export default function FileSelect(props) {
             key={uuidv4()}
             fileSelectResult={fileSelectResult}
             itemType={props.itemType}
+            excludeVisibility={excludeVisibility}
+            setExcludeVisibility={setExcludeVisibility}
+            addVisibility={addVisibility}
+            setAddVisibility={setAddVisibility}
           />
         </>
       ) : fileSelectResult && props.itemType === "ARMO" ? (
@@ -53,6 +60,10 @@ export default function FileSelect(props) {
             key={uuidv4()}
             fileSelectResult={fileSelectResult}
             itemType={props.itemType}
+            excludeVisibility={excludeVisibility}
+            setExcludeVisibility={setExcludeVisibility}
+            addVisibility={addVisibility}
+            setAddVisibility={setAddVisibility}
           />
         </>
       ) : fileSelectResult && props.itemType === "SPEL" ? (
@@ -61,6 +72,10 @@ export default function FileSelect(props) {
             key={uuidv4()}
             fileSelectResult={fileSelectResult}
             itemType={props.itemType}
+            excludeVisibility={excludeVisibility}
+            setExcludeVisibility={setExcludeVisibility}
+            addVisibility={addVisibility}
+            setAddVisibility={setAddVisibility}
           />
         </>
       ) : (
