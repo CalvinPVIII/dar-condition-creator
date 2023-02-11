@@ -5,17 +5,15 @@ const path = require("path");
 
 ipcMain.handle("convertFile", async (event, data) => {
   const result = await FileHelper.espToXml(data);
-  // console.log("result: " + result);
   return result;
 });
 
 ipcMain.handle("getItemsFromXml", async (event, itemType) => {
-  console.log(itemType);
   const result = await FileHelper.getItemsFromXml(
     "./conversion/ConvertedFile.XML",
     itemType
   );
-  console.log(result);
+
   return result;
 });
 

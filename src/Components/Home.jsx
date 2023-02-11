@@ -3,6 +3,7 @@ import FileSelect from "./FileSelect";
 import Conditions from "../models/Conditions";
 import CurrentConditions from "./CurrentConditions";
 import { useState, createContext } from "react";
+import ItemSelect from "./ItemSelect";
 
 export const ConditionsContext = createContext({
   conditions: null,
@@ -14,6 +15,8 @@ function Home() {
   const [stateHistory, setStateHistory] = useState([]);
   const [itemType, setItemType] = useState("");
   const [currentConditions, setCurrentConditions] = useState(new Conditions());
+  const [fileSelectResult, setFileSelectResult] = useState(false);
+
   const conditions = { currentConditions, setCurrentConditions };
 
   const handleTypeClick = (itemType) => {
@@ -45,24 +48,29 @@ function Home() {
     }
   };
 
-  if (currentState === "home") {
-    return (
-      <>
-        <h1 onClick={() => handleTypeClick("WEAP")}>Weapons</h1>
-        <h1 onClick={() => handleTypeClick("ARMO")}>Armor</h1>
-        <h1 onClick={() => handleTypeClick("SPEL")}>Spells</h1>
-        <h1 onClick={() => handleTypeClick("MISC")}>Misc.</h1>
-      </>
-    );
-  } else if (currentState === "addItem") {
-    return (
-      <ConditionsContext.Provider value={conditions}>
-        <FileSelect itemType={itemType} />
-        <BackButton onBackClick={handleBackClick} />
-        <CurrentConditions />
-      </ConditionsContext.Provider>
-    );
-  }
-  return <></>;
+  return (
+    <>
+      <FileSelect
+        itemType={itemType}
+        setFileSelectResult={setFileSelectResult}
+      />
+      {currentState === "home" ? (
+        <>
+          <h1 onClick={() => handleTypeClick("WEAP")}>Weapons</h1>
+          <h1 onClick={() => handleTypeClick("ARMO")}>Armor</h1>
+          <h1 onClick={() => handleTypeClick("SPEL")}>Spells</h1>
+          <h1 onClick={() => handleTypeClick("MISC")}>Misc.</h1>
+        </>
+      ) : currentState === "addItem" ? (
+        <ConditionsContext.Provider value={conditions}>
+          <ItemSelect fileSelectResult={fileSelectResult} itemType={itemType} />
+          <BackButton onBackClick={handleBackClick} />
+          <CurrentConditions />
+        </ConditionsContext.Provider>
+      ) : (
+        <></>
+      )}
+    </>
+  );
 }
 export default Home;

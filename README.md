@@ -8,13 +8,14 @@
 - General Weapon Types (all swords, all axes, all dual wield etc.)
 - Add Misc options (Race, Gender, Level, Time of Day etc)
 - Backend to actually create file
+- Dry up FileHelper.getItemsFromXML
 
 ### Known bugs
 
-- Adding a new esp doesn't update list
-  - Remove option to add esp?
+- ~~Adding a new esp doesn't update list~~
+
 - ~~Going back and readding the same ESP should auto check all items already in the currentConditions~~
 
 - ~~Unhandled exception when there are no items of selected type in esp~~ - Add custom handling for no items of select type in esp?
 
-- Clicking an item in exclude mode switches back to add mode
+- ~~Clicking an item in exclude mode switches back to add mode~~

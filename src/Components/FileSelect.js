@@ -1,17 +1,17 @@
 import { useState } from "react";
 
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 
-import WeaponFileSelect from "./WeaponFileSelect";
-import ArmorFileSelect from "./ArmorFileSelect";
+// import WeaponFileSelect from "./WeaponFileSelect";
+// import ArmorFileSelect from "./ArmorFileSelect";
 const { ipcRenderer } = window.require("electron");
 
 export default function FileSelect(props) {
-  const [fileSelectResult, setFileSelectResult] = useState(false);
+  // const [fileSelectResult, setFileSelectResult] = useState(false);
   const [error, setError] = useState("");
 
-  const [excludeVisibility, setExcludeVisibility] = useState("none");
-  const [addVisibility, setAddVisibility] = useState("inline");
+  // const [excludeVisibility, setExcludeVisibility] = useState("none");
+  // const [addVisibility, setAddVisibility] = useState("inline");
 
   const onFileUpload = async (e) => {
     ipcRenderer.invoke("convertFile", e.target.files[0].path).then((result) => {
@@ -19,7 +19,7 @@ export default function FileSelect(props) {
         setError("");
         ipcRenderer.invoke("getItemsFromXml", props.itemType).then((res) => {
           if (res !== "error") {
-            setFileSelectResult(res);
+            props.setFileSelectResult(res);
           } else {
             setError(
               `There was an issue loading the selected items for ${e.target.files[0].name}`
@@ -42,7 +42,7 @@ export default function FileSelect(props) {
         onChange={(e) => onFileUpload(e)}
         accept=".esp, .esl, .esm"
       />
-      {fileSelectResult && props.itemType === "WEAP" ? (
+      {/* {fileSelectResult && props.itemType === "WEAP" ? (
         <>
           <WeaponFileSelect
             key={uuidv4()}
@@ -80,7 +80,7 @@ export default function FileSelect(props) {
         </>
       ) : (
         <></>
-      )}
+      )} */}
     </>
   );
 }

@@ -34,7 +34,7 @@ class FileHelper {
 
   static getItemsFromXml(filePath, itemType) {
     return new Promise((resolve, reject) => {
-      const itemArray = [];
+      const groupedItems = { WEAP: [], ARMO: [], SPEL: [] };
       // open file
       fs.readFile(filePath, "utf8", (error, data) => {
         if (error) {
@@ -48,19 +48,44 @@ class FileHelper {
               resolve(err);
             } else {
               try {
-                // grab only items specified by itemType parameter
-                const items = result.plugin["GRUP"].filter(
-                  (group) => group["$"].label === itemType
-                )[0][itemType];
-                // add each item to itemArray to return later
-                items.forEach((item) => {
-                  const id = `0x${item["$"].id.slice(2)}`;
-                  const obj = { itemId: id, itemName: item.FULL[0] };
+                // grab all weapons, armors, and spells
+                const itemGroups = result.plugin["GRUP"].filter((group) =>
+                  ["WEAP", "ARMO", "SPEL"].includes(group["$"].label)
+                );
 
-                  itemArray.push(obj);
+                // add each item to itemArray to return later
+                itemGroups.forEach((group) => {
+                  if (group.SPEL) {
+                    groupedItems["SPEL"] = group.SPEL;
+                    const restructuredItems = groupedItems["SPEL"].map(
+                      (item) => {
+                        const id = `0x${item["$"].id.slice(2)}`;
+                        return { itemId: id, itemName: item.FULL[0] };
+                      }
+                    );
+                    groupedItems["SPEL"] = restructuredItems;
+                  } else if (group.WEAP) {
+                    groupedItems["WEAP"] = group.WEAP;
+                    const restructuredItems = groupedItems["WEAP"].map(
+                      (item) => {
+                        const id = `0x${item["$"].id.slice(2)}`;
+                        return { itemId: id, itemName: item.FULL[0] };
+                      }
+                    );
+                    groupedItems["WEAP"] = restructuredItems;
+                  } else if (group.ARMO) {
+                    groupedItems["ARMO"] = group.ARMO;
+                    const restructuredItems = groupedItems["ARMO"].map(
+                      (item) => {
+                        const id = `0x${item["$"].id.slice(2)}`;
+                        return { itemId: id, itemName: item.FULL[0] };
+                      }
+                    );
+                    groupedItems["ARMO"] = restructuredItems;
+                  }
                 });
 
-                resolve(itemArray);
+                resolve(groupedItems);
               } catch (err) {
                 console.log(err);
                 resolve("error");
