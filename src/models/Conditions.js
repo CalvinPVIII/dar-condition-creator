@@ -11,4 +11,12 @@ export default class Conditions {
   rightHandSpells = [];
   excludedLeftHandSpells = [];
   excludedRightHandSpells = [];
+
+  minLevel = 0;
+  maxLevel = 0;
+
+  includedRaces = [];
+  excludedRaces = [];
+
+  specificGender = "";
 }

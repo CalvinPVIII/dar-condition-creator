@@ -11,7 +11,6 @@ export default function PluginItems(props) {
 
   const fileName = useContext(FileNameContext);
 
-  console.log(fileName);
   const initialCheckBoxValues = {};
   props.items.forEach((item) => {
     if (
@@ -182,6 +181,7 @@ export default function PluginItems(props) {
   const handleItemInSelectedList = (itemSelectBox) => {
     // selecting/deselecting checkbox in internal system
     const newCheckBoxStatus = { ...itemCheckBoxStatus };
+    console.log(itemSelectBox.value);
     newCheckBoxStatus[itemSelectBox.value] =
       !newCheckBoxStatus[itemSelectBox.value];
     setItemCheckBoxStatus(newCheckBoxStatus);
@@ -254,7 +254,10 @@ export default function PluginItems(props) {
       <div className="item-list">
         {itemsArray.map((item) => (
           <div className="item" key={item.itemId}>
-            <label htmlFor={item.itemId}>
+            <label
+              htmlFor={item.itemId}
+              // onClick={(e) => handleItemInSelectedList(e.target.children[0])}
+            >
               <input
                 name={item.itemName}
                 type="checkbox"
@@ -262,7 +265,6 @@ export default function PluginItems(props) {
                 onChange={(e) => handleItemInSelectedList(e.target)}
                 checked={itemCheckBoxStatus[item.itemId]}
               />
-
               {item.itemName}
             </label>
           </div>

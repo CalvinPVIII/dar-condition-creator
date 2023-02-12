@@ -68,6 +68,16 @@ export default function CurrentConditions() {
           {item.itemName} - {item.fileName}
         </p>
       ))}
+
+      <h4>Selected Races:</h4>
+      {currentConditions.includedRaces.map((race) => (
+        <p key={`included-${race}`}>{race}</p>
+      ))}
+
+      <h4>Excluded Races:</h4>
+      {currentConditions.excludedRaces.map((race) => (
+        <p key={`excluded-${race}`}>{race}</p>
+      ))}
     </>
   );
 }

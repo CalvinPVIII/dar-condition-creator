@@ -1,9 +1,10 @@
+import { useState, createContext } from "react";
 import BackButton from "./BackButton";
 import FileSelect from "./FileSelect";
 import Conditions from "../models/Conditions";
 import CurrentConditions from "./CurrentConditions";
-import { useState, createContext } from "react";
 import ItemSelect from "./ItemSelect";
+import MiscOptions from "./MiscOptions";
 
 export const ConditionsContext = createContext({
   conditions: null,
@@ -23,7 +24,7 @@ function Home() {
   const conditions = { currentConditions, setCurrentConditions };
 
   const handleTypeClick = (itemType) => {
-    if (itemType === "misc") {
+    if (itemType === "MISC") {
       setCurrentState("addMisc");
       addToStateHistory("addMisc");
     } else {
@@ -52,34 +53,40 @@ function Home() {
   };
 
   return (
-    <>
-      <FileSelect
-        itemType={itemType}
-        setFileSelectResult={setFileSelectResult}
-        setFileName={setFileName}
-      />
-      {currentState === "home" ? (
-        <>
-          <h1 onClick={() => handleTypeClick("WEAP")}>Weapons</h1>
-          <h1 onClick={() => handleTypeClick("ARMO")}>Armor</h1>
-          <h1 onClick={() => handleTypeClick("SPEL")}>Spells</h1>
-          <h1 onClick={() => handleTypeClick("MISC")}>Misc.</h1>
-        </>
-      ) : currentState === "addItem" ? (
-        <ConditionsContext.Provider value={conditions}>
+    <ConditionsContext.Provider value={conditions}>
+      <>
+        <FileSelect
+          itemType={itemType}
+          setFileSelectResult={setFileSelectResult}
+          setFileName={setFileName}
+        />
+        {currentState === "home" ? (
+          <>
+            <h1 onClick={() => handleTypeClick("WEAP")}>Weapons</h1>
+            <h1 onClick={() => handleTypeClick("ARMO")}>Armor</h1>
+            <h1 onClick={() => handleTypeClick("SPEL")}>Spells</h1>
+            <h1 onClick={() => handleTypeClick("MISC")}>Misc.</h1>
+          </>
+        ) : currentState === "addItem" ? (
           <FileNameContext.Provider value={fileName}>
             <ItemSelect
               fileSelectResult={fileSelectResult}
               itemType={itemType}
             />
           </FileNameContext.Provider>
+        ) : currentState === "addMisc" ? (
+          <>
+            <MiscOptions />
+          </>
+        ) : (
+          <></>
+        )}
+        <>
           <BackButton onBackClick={handleBackClick} />
           <CurrentConditions />
-        </ConditionsContext.Provider>
-      ) : (
-        <></>
-      )}
-    </>
+        </>
+      </>
+    </ConditionsContext.Provider>
   );
 }
 export default Home;
