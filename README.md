@@ -7,7 +7,8 @@
 - Stance Support
 - General Weapon Types (all swords, all axes, all dual wield etc.)
 - Add Misc options (Race, Gender, Level, Time of Day etc)
-- Backend to actually create file
+- Backend function to actually create file - ~~Need to keep track of file names~~
+- Support for changing file names for merged plugins
 - Dry up FileHelper.getItemsFromXML
 
 ### Known bugs

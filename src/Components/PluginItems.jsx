@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { ConditionsContext } from "./Home";
+import { FileNameContext } from "./Home";
 export default function PluginItems(props) {
   const [currentlySelectedItems, setCurrentlySelectedItems] = useState([]);
   const [itemsArray, setItemsArray] = useState(props.items);
@@ -8,6 +9,9 @@ export default function PluginItems(props) {
   const { currentConditions, setCurrentConditions } =
     useContext(ConditionsContext);
 
+  const fileName = useContext(FileNameContext);
+
+  console.log(fileName);
   const initialCheckBoxValues = {};
   props.items.forEach((item) => {
     if (
@@ -57,7 +61,7 @@ export default function PluginItems(props) {
   // takes in a DOM element or object that has a value and name
   // adjusts the Conditions object provided in the context
   const addSelectionToConditions = (item) => {
-    item = { itemId: item.value, itemName: item.name };
+    item = { itemId: item.value, itemName: item.name, fileName: fileName };
     const newConditions = { ...currentConditions };
 
     if (props.itemType === "ARMO") {
@@ -96,7 +100,7 @@ export default function PluginItems(props) {
   // takes in a DOM element or object that has a value and name
   // adjusts the Conditions object provided in the context
   const removeSelectionFromConditions = (item) => {
-    item = { itemId: item.value, itemName: item.name };
+    item = { itemId: item.value, itemName: item.name, fileName: fileName };
     const newConditions = { ...currentConditions };
 
     if (props.itemType === "ARMO") {

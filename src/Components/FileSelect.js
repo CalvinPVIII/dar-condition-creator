@@ -19,6 +19,7 @@ export default function FileSelect(props) {
         setError("");
         ipcRenderer.invoke("getItemsFromXml", props.itemType).then((res) => {
           if (res !== "error") {
+            props.setFileName(e.target.files[0].name);
             props.setFileSelectResult(res);
           } else {
             setError(

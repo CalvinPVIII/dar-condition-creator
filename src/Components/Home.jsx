@@ -10,8 +10,11 @@ export const ConditionsContext = createContext({
   setConditions: () => {},
 });
 
+export const FileNameContext = createContext();
+
 function Home() {
   const [currentState, setCurrentState] = useState("home");
+  const [fileName, setFileName] = useState("");
   const [stateHistory, setStateHistory] = useState([]);
   const [itemType, setItemType] = useState("");
   const [currentConditions, setCurrentConditions] = useState(new Conditions());
@@ -53,6 +56,7 @@ function Home() {
       <FileSelect
         itemType={itemType}
         setFileSelectResult={setFileSelectResult}
+        setFileName={setFileName}
       />
       {currentState === "home" ? (
         <>
@@ -63,7 +67,12 @@ function Home() {
         </>
       ) : currentState === "addItem" ? (
         <ConditionsContext.Provider value={conditions}>
-          <ItemSelect fileSelectResult={fileSelectResult} itemType={itemType} />
+          <FileNameContext.Provider value={fileName}>
+            <ItemSelect
+              fileSelectResult={fileSelectResult}
+              itemType={itemType}
+            />
+          </FileNameContext.Provider>
           <BackButton onBackClick={handleBackClick} />
           <CurrentConditions />
         </ConditionsContext.Provider>
