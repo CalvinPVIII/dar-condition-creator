@@ -1,17 +1,17 @@
 import { useState, useContext } from "react";
-
+import PropTypes from "prop-types";
 import { ConditionsContext } from "./Home";
+import { v4 as uuidv4 } from "uuid";
 
-// props:
-// array of item objects that contain item.name and item.id
-// the array property that contains all the included items of that type
-// the array property that contains all the excluded items of that type
 export default function ItemSelection(props) {
   const { currentConditions, setCurrentConditions } =
     useContext(ConditionsContext);
 
   const [includedOrExcludedItem, setIncludedOrExcludedItem] =
     useState("included");
+
+  const [filteredItems, setFilteredItems] = useState(props.items);
+  const [searchInput, setSearchInput] = useState("");
 
   const conditionArrays = {
     included: props.includedArray,
@@ -24,7 +24,6 @@ export default function ItemSelection(props) {
       excluded: false,
       included: false,
     };
-
     if (currentConditions[props.excludedArray].includes(item)) {
       itemCheckStatus[item.itemName].excluded = true;
     } else if (currentConditions[props.includedArray].includes(item)) {
@@ -113,7 +112,7 @@ export default function ItemSelection(props) {
   };
 
   const toggleAll = (addOrRemove) => {
-    props.items.forEach((item) => {
+    filteredItems.forEach((item) => {
       if (addOrRemove === "add") {
         addToConditions(item);
       } else if (addOrRemove === "remove") {
@@ -122,8 +121,21 @@ export default function ItemSelection(props) {
     });
   };
 
+  const handleFilterItems = (input) => {
+    setSearchInput(input);
+    const newItems = props.items.filter((item) =>
+      item.itemName.toUpperCase().includes(input.toUpperCase())
+    );
+    setFilteredItems(newItems);
+  };
+
+  const resetFilterItems = () => {
+    setSearchInput("");
+    setFilteredItems(props.items);
+  };
+
   return (
-    <div className="select-race-section">
+    <div className="select-section">
       <h3>
         <span
           onClick={() => handleIncludeExcludeToggle("included")}
@@ -155,8 +167,17 @@ export default function ItemSelection(props) {
           Remove All
         </button>
       </div>
-      {props.items.map((item) => (
-        <label key={item.itemName}>
+      <div>
+        <h3>Search:</h3>
+        <input
+          type="text"
+          onChange={(e) => handleFilterItems(e.target.value)}
+          value={searchInput}
+        />
+        <button onClick={resetFilterItems}>Reset</button>
+      </div>
+      {filteredItems.map((item) => (
+        <label key={uuidv4()}>
           <input
             type="checkbox"
             checked={checkedStatus[item.itemName][includedOrExcludedItem]}
@@ -168,3 +189,9 @@ export default function ItemSelection(props) {
     </div>
   );
 }
+
+ItemSelection.propTypes = {
+  items: PropTypes.array, // array of items as objects, each element needs an itemName and itemId
+  includedArray: PropTypes.string, // the string that corresponds to the property of Conditions.js, ex: armor would be the "equippedArmor" property
+  excludedArray: PropTypes.string, // the string that corresponds to the property of Conditions.js, ex: armor would be the "excludedArmor" property
+};

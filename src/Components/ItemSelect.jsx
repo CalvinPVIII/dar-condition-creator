@@ -1,36 +1,114 @@
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import WeaponFileSelect from "./WeaponFileSelect";
-import ArmorFileSelect from "./ArmorFileSelect";
+import ItemSelection from "./ItemSelection";
 export default function ItemSelect(props) {
-  const [excludeVisibility, setExcludeVisibility] = useState("none");
-  const [addVisibility, setAddVisibility] = useState("inline");
+  const [rightHandStyles, setRightHandStyles] = useState({
+    display: "inline",
+    opacity: 1,
+  });
+  const [leftHandStyles, setLefHandStyles] = useState({
+    display: "none",
+    opacity: 0.5,
+  });
+
+  const handleLeftRightToggle = (leftOrRight) => {
+    if (leftOrRight === "left") {
+      setLefHandStyles({ display: "inline", opacity: 1 });
+      setRightHandStyles({
+        display: "none",
+        opacity: 0.5,
+      });
+    } else if (leftOrRight === "right") {
+      setLefHandStyles({
+        display: "none",
+        opacity: 0.5,
+      });
+      setRightHandStyles({ display: "inline", opacity: 1 });
+    }
+  };
+
+  const conditionsArraysByType = {
+    ARMO: {
+      included: "equippedArmor",
+      excluded: "excludedArmor",
+    },
+    WEAP: {
+      right: {
+        included: "rightHandWeapons",
+        excluded: "excludedRightHandWeapons",
+      },
+      left: {
+        included: "leftHandWeapons",
+        excluded: "excludedLeftHandWeapons",
+      },
+    },
+    SPEL: {
+      right: {
+        included: "rightHandSpells",
+        excluded: "excludedRightHandSpells",
+      },
+      left: {
+        included: "leftHandSpells",
+        excluded: "excludedLeftHandSpells",
+      },
+    },
+  };
 
   return (
     <>
       {props.fileSelectResult && props.itemType === "ARMO" ? (
         <>
-          <ArmorFileSelect
-            key={uuidv4()}
-            fileSelectResult={props.fileSelectResult["ARMO"]}
-            itemType={props.itemType}
-            excludeVisibility={excludeVisibility}
-            setExcludeVisibility={setExcludeVisibility}
-            addVisibility={addVisibility}
-            setAddVisibility={setAddVisibility}
+          <ItemSelection
+            items={props.fileSelectResult["ARMO"]}
+            includedArray={conditionsArraysByType["ARMO"].included}
+            excludedArray={conditionsArraysByType["ARMO"].excluded}
           />
         </>
-      ) : props.fileSelectResult ? (
+      ) : props.fileSelectResult &&
+        (props.itemType === "WEAP" || props.itemType === "SPEL") ? (
         <>
-          <WeaponFileSelect
-            key={uuidv4()}
-            fileSelectResult={props.fileSelectResult[props.itemType]}
-            itemType={props.itemType}
-            excludeVisibility={excludeVisibility}
-            setExcludeVisibility={setExcludeVisibility}
-            addVisibility={addVisibility}
-            setAddVisibility={setAddVisibility}
-          />
+          <h3>
+            <span
+              onClick={() => handleLeftRightToggle("right")}
+              style={{ opacity: rightHandStyles.opacity }}
+            >
+              Right Hand
+            </span>{" "}
+            ||{" "}
+            <span
+              onClick={() => handleLeftRightToggle("left")}
+              style={{ opacity: leftHandStyles.opacity }}
+            >
+              Left Hand
+            </span>
+          </h3>
+          <div
+            className="right-hand"
+            style={{ display: rightHandStyles.display }}
+          >
+            <ItemSelection
+              items={props.fileSelectResult[props.itemType]}
+              includedArray={
+                conditionsArraysByType[props.itemType].right.included
+              }
+              excludedArray={
+                conditionsArraysByType[props.itemType].right.excluded
+              }
+            />
+          </div>
+          <div
+            className="left-hand"
+            style={{ display: leftHandStyles.display }}
+          >
+            <ItemSelection
+              items={props.fileSelectResult[props.itemType]}
+              includedArray={
+                conditionsArraysByType[props.itemType].left.included
+              }
+              excludedArray={
+                conditionsArraysByType[props.itemType].left.excluded
+              }
+            />
+          </div>
         </>
       ) : (
         <></>
