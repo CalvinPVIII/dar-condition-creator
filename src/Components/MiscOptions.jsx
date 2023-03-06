@@ -2,10 +2,11 @@ import { useState, useContext } from "react";
 
 import { ConditionsContext } from "./Home";
 
-import RaceSelection from "./RaceSelection";
 import ItemSelection from "./ItemSelection";
 
 import races from "../constants/races";
+import LevelSelection from "./LevelSelection";
+import GenderSelection from "./GenderSelection";
 
 export default function MiscOptions() {
   //   const { currentConditions, setCurrentConditions } =
@@ -19,11 +20,27 @@ export default function MiscOptions() {
   return (
     <>
       <h3>Add Misc Options</h3>
-      <ItemSelection
-        includedArray={"includedRaces"}
-        excludedArray={"excludedRaces"}
-        items={races}
-      />
+      <div className="race-selection">
+        <ItemSelection
+          includedArray={"includedRaces"}
+          excludedArray={"excludedRaces"}
+          items={races}
+        />
+      </div>
+      <div className="gender-selection">
+        {/* <ItemSelection
+          includedArray={"includedGenders"}
+          excludedArray={"excludedGenders"}
+          items={[
+            { itemName: "male", itemId: 1 },
+            { itemName: "female", itemId: 2 },
+          ]}
+        /> */}
+        <GenderSelection />
+      </div>
+      <div className="level-selection">
+        <LevelSelection />
+      </div>
     </>
   );
 }

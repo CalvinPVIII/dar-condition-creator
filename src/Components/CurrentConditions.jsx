@@ -78,6 +78,15 @@ export default function CurrentConditions() {
       {currentConditions.excludedRaces.map((race) => (
         <p key={`excluded-${race.itemName}`}>{race.itemName}</p>
       ))}
+
+      <h4>Specific Gender:</h4>
+      <p>{currentConditions.specificGender}</p>
+
+      <h4>Max Level:</h4>
+      <p>{currentConditions.maxLevel}</p>
+
+      <h4>Min Level:</h4>
+      <p>{currentConditions.minLevel}</p>
     </>
   );
 }
