@@ -5,6 +5,7 @@ import Conditions from "../models/Conditions";
 import CurrentConditions from "./CurrentConditions";
 import ItemSelect from "./ItemSelect";
 import MiscOptions from "./MiscOptions";
+import weaponTypes from "../constants/weaponTypes";
 
 export const ConditionsContext = createContext({
   conditions: null,
@@ -31,6 +32,9 @@ function Home() {
       setCurrentState("addItem");
       addToStateHistory("addItem");
       setItemType(itemType);
+    }
+    if (itemType === "TYPE") {
+      setFileSelectResult(weaponTypes);
     }
   };
 
@@ -63,6 +67,7 @@ function Home() {
         {currentState === "home" ? (
           <>
             <h1 onClick={() => handleTypeClick("WEAP")}>Weapons</h1>
+            <h1 onClick={() => handleTypeClick("TYPE")}>Weapon Type</h1>
             <h1 onClick={() => handleTypeClick("ARMO")}>Armor</h1>
             <h1 onClick={() => handleTypeClick("SPEL")}>Spells</h1>
             <h1 onClick={() => handleTypeClick("MISC")}>Misc.</h1>

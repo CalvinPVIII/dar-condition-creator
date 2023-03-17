@@ -87,6 +87,23 @@ export default function CurrentConditions() {
 
       <h4>Min Level:</h4>
       <p>{currentConditions.minLevel}</p>
+
+      <h4>Equipped WeaponTypes in right hand:</h4>
+      {currentConditions.rightHandWeaponTypes.map((item) => (
+        <p key={item.itemId}>{item.itemName}</p>
+      ))}
+      <h4>Equipped WeaponTypes in left hand:</h4>
+      {currentConditions.leftHandWeaponTypes.map((item) => (
+        <p key={item.itemId}>{item.itemName}</p>
+      ))}
+      <h4>Excluded WeaponTypes in left hand:</h4>
+      {currentConditions.excludedLeftHandWeaponTypes.map((item) => (
+        <p key={item.itemId}>{item.itemName}</p>
+      ))}
+      <h4>Excluded WeaponTypes in right hand:</h4>
+      {currentConditions.excludedRightHandWeaponTypes.map((item) => (
+        <p key={item.itemId}>{item.itemName}</p>
+      ))}
     </>
   );
 }

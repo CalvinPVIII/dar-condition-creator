@@ -5,8 +5,8 @@
 - ~~Add/Exclude Armor~~
 - ~~Add/Exclude Spells~~
 - Stance Support
-- General Weapon Types (all swords, all axes, all dual wield etc.)
-- Add Misc options (~~Race~~, Gender, Level, Time of Day etc)
+- ~~General Weapon Types (all swords, all axes, all dual wield etc.)~~
+- Add Misc options (~~Race~~, ~~Gender~~, ~~Level~~, Time of Day etc)
 - Backend function to actually create file - ~~Need to keep track of file names~~
 - Support for changing file names for merged plugins
 - Dry up FileHelper.getItemsFromXML

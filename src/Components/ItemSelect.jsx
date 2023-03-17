@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ItemSelection from "./ItemSelection";
+import weaponTypes from "../constants/weaponTypes";
 export default function ItemSelect(props) {
   const [rightHandStyles, setRightHandStyles] = useState({
     display: "inline",
@@ -51,6 +52,16 @@ export default function ItemSelect(props) {
         excluded: "excludedLeftHandSpells",
       },
     },
+    TYPE: {
+      right: {
+        included: "rightHandWeaponTypes",
+        excluded: "excludedRightHandWeaponTypes",
+      },
+      left: {
+        included: "leftHandWeaponTypes",
+        excluded: "excludedLeftHandWeaponTypes",
+      },
+    },
   };
 
   return (
@@ -64,7 +75,9 @@ export default function ItemSelect(props) {
           />
         </>
       ) : props.fileSelectResult &&
-        (props.itemType === "WEAP" || props.itemType === "SPEL") ? (
+        (props.itemType === "WEAP" ||
+          props.itemType === "SPEL" ||
+          props.itemType === "TYPE") ? (
         <>
           <h3>
             <span

@@ -12,6 +12,11 @@ export default class Conditions {
   excludedLeftHandSpells = [];
   excludedRightHandSpells = [];
 
+  leftHandWeaponTypes = [];
+  rightHandWeaponTypes = [];
+  excludedLeftHandWeaponTypes = [];
+  excludedRightHandWeaponTypes = [];
+
   minLevel = 0;
   maxLevel = 0;
 
