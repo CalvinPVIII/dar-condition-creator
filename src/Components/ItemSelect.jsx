@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ItemSelection from "./ItemSelection";
-import weaponTypes from "../constants/weaponTypes";
+
 export default function ItemSelect(props) {
   const [rightHandStyles, setRightHandStyles] = useState({
     display: "inline",

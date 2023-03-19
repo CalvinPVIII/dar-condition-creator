@@ -10,7 +10,13 @@
 - Backend function to actually create file - ~~Need to keep track of file names~~
 - Support for changing file names for merged plugins
 - Dry up FileHelper.getItemsFromXML
-- Maybe rework the PluginItems checkboxes to be more like the RaceSelection checkboxes
+- ~~Maybe rework the PluginItems checkboxes to be more like the RaceSelection checkboxes~~
+- Styling:
+  - Weapon Types
+  - Drop downs in side menu
+  - Home screen
+  - Item selection?
+  - Change app icon
 
 ### Known bugs
 
@@ -21,4 +27,5 @@
 - ~~Unhandled exception when there are no items of selected type in esp~~ - Add custom handling for no items of select type in esp?
 
 - ~~Clicking an item in exclude mode switches back to add mode~~
-- Duplicate items being add to the conditions when "check all" is clicked
+- ~~Duplicate items being add to the conditions when "check all" is clicked~~
+- File name not being added to conditions?

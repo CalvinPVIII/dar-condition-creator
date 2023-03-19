@@ -19,17 +19,19 @@ export default function ItemSelection(props) {
   };
 
   const itemCheckStatus = {};
-  props.items.forEach((item) => {
-    itemCheckStatus[item.itemName] = {
-      excluded: false,
-      included: false,
-    };
-    if (currentConditions[props.excludedArray].includes(item)) {
-      itemCheckStatus[item.itemName].excluded = true;
-    } else if (currentConditions[props.includedArray].includes(item)) {
-      itemCheckStatus[item.itemName].included = true;
-    }
-  });
+  if (props.items) {
+    props.items.forEach((item) => {
+      itemCheckStatus[item.itemName] = {
+        excluded: false,
+        included: false,
+      };
+      if (currentConditions[props.excludedArray].includes(item)) {
+        itemCheckStatus[item.itemName].excluded = true;
+      } else if (currentConditions[props.includedArray].includes(item)) {
+        itemCheckStatus[item.itemName].included = true;
+      }
+    });
+  }
 
   const [checkedStatus, setCheckedStatus] = useState(itemCheckStatus);
 
@@ -134,60 +136,70 @@ export default function ItemSelection(props) {
     setFilteredItems(props.items);
   };
 
-  return (
-    <div className="select-section">
-      <h3>
-        <span
-          onClick={() => handleIncludeExcludeToggle("included")}
-          style={{ opacity: opacity.included }}
-        >
-          Add Items
-        </span>
-        ||
-        <span
-          onClick={() => handleIncludeExcludeToggle("excluded")}
-          style={{ opacity: opacity.excluded }}
-        >
-          Exclude Items
-        </span>
-      </h3>
-      <div>
-        <button
-          onClick={() => {
-            toggleAll("add");
-          }}
-        >
-          Select All
-        </button>
-        <button
-          onClick={() => {
-            toggleAll("remove");
-          }}
-        >
-          Remove All
-        </button>
-      </div>
-      <div>
-        <h3>Search:</h3>
-        <input
-          type="text"
-          onChange={(e) => handleFilterItems(e.target.value)}
-          value={searchInput}
-        />
-        <button onClick={resetFilterItems}>Reset</button>
-      </div>
-      {filteredItems.map((item) => (
-        <label key={uuidv4()}>
+  if (props.items) {
+    return (
+      <div className="select-section">
+        <h3>
+          <span
+            onClick={() => handleIncludeExcludeToggle("included")}
+            style={{ opacity: opacity.included }}
+          >
+            Add Items
+          </span>
+          ||
+          <span
+            onClick={() => handleIncludeExcludeToggle("excluded")}
+            style={{ opacity: opacity.excluded }}
+          >
+            Exclude Items
+          </span>
+        </h3>
+        <div>
+          <button
+            onClick={() => {
+              toggleAll("add");
+            }}
+          >
+            Select All
+          </button>
+          <button
+            onClick={() => {
+              toggleAll("remove");
+            }}
+          >
+            Remove All
+          </button>
+        </div>
+        <div>
+          <h3>Search:</h3>
           <input
-            type="checkbox"
-            checked={checkedStatus[item.itemName][includedOrExcludedItem]}
-            onChange={() => checkBox(item)}
+            type="text"
+            onChange={(e) => handleFilterItems(e.target.value)}
+            value={searchInput}
           />
-          {item.itemName}
-        </label>
-      ))}
-    </div>
-  );
+          <button onClick={resetFilterItems}>Reset</button>
+        </div>
+        <div className="item-checkboxes">
+          {filteredItems.map((item) =>
+            item.image ? (
+              <img src={item.image} />
+            ) : (
+              <label key={uuidv4()}>
+                <input
+                  type="checkbox"
+                  checked={checkedStatus[item.itemName][includedOrExcludedItem]}
+                  onChange={() => checkBox(item)}
+                />
+                {item.itemName}
+              </label>
+            )
+          )}
+        </div>
+      </div>
+    );
+  } else {
+    return <p>There are no items to display</p>;
+  }
 }
 
 ItemSelection.propTypes = {

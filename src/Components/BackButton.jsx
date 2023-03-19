@@ -1,3 +1,3 @@
 export default function BackButton(props) {
-  return <h1 onClick={props.onBackClick}>{`<=`}</h1>;
+  return <h1 id="back-button" onClick={props.onBackClick}>{`🠔`}</h1>;
 }

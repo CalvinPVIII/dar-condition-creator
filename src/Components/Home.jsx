@@ -6,6 +6,7 @@ import CurrentConditions from "./CurrentConditions";
 import ItemSelect from "./ItemSelect";
 import MiscOptions from "./MiscOptions";
 import weaponTypes from "../constants/weaponTypes";
+import PopoutMenu from "./PopoutMenu";
 
 export const ConditionsContext = createContext({
   conditions: null,
@@ -59,6 +60,7 @@ function Home() {
   return (
     <ConditionsContext.Provider value={conditions}>
       <>
+        <PopoutMenu />
         <FileSelect
           itemType={itemType}
           setFileSelectResult={setFileSelectResult}
@@ -66,11 +68,21 @@ function Home() {
         />
         {currentState === "home" ? (
           <>
-            <h1 onClick={() => handleTypeClick("WEAP")}>Weapons</h1>
-            <h1 onClick={() => handleTypeClick("TYPE")}>Weapon Type</h1>
-            <h1 onClick={() => handleTypeClick("ARMO")}>Armor</h1>
-            <h1 onClick={() => handleTypeClick("SPEL")}>Spells</h1>
-            <h1 onClick={() => handleTypeClick("MISC")}>Misc.</h1>
+            <h1 className="navigation" onClick={() => handleTypeClick("WEAP")}>
+              Weapons
+            </h1>
+            <h1 className="navigation" onClick={() => handleTypeClick("TYPE")}>
+              Weapon Type
+            </h1>
+            <h1 className="navigation" onClick={() => handleTypeClick("ARMO")}>
+              Armor
+            </h1>
+            <h1 className="navigation" onClick={() => handleTypeClick("SPEL")}>
+              Spells
+            </h1>
+            <h1 className="navigation" onClick={() => handleTypeClick("MISC")}>
+              Misc.
+            </h1>
           </>
         ) : currentState === "addItem" ? (
           <FileNameContext.Provider value={fileName}>
@@ -88,7 +100,6 @@ function Home() {
         )}
         <>
           <BackButton onBackClick={handleBackClick} />
-          <CurrentConditions />
         </>
       </>
     </ConditionsContext.Provider>
