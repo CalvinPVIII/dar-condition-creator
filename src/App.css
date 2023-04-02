@@ -26,11 +26,6 @@ body {
   cursor: pointer;
 }
 
-#hamburger-menu {
-  max-width: 300px;
-  height: 100%;
-}
-
 #menu-toggle {
   position: fixed;
   top: 0px;
@@ -57,6 +52,7 @@ body {
   top: 0;
   left: 0;
   width: 300px;
+  min-height: 99%;
   max-height: 100%;
   margin: 0;
   padding: 80px 0;
@@ -120,4 +116,47 @@ body {
 /* on hover, color of the scrollbar thumb */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.drop-down-items {
+  background-color: black;
+}
+
+.drop-down-items.item-visible {
+  animation: make-visible 0.3s;
+  /* visibility: visible; */
+  max-height: 100%;
+  opacity: 100%;
+}
+
+.drop-down-items.item-hidden {
+  animation: make-hidden 0.1s;
+  max-height: 0px;
+  opacity: 0%;
+}
+
+@keyframes make-visible {
+  0% {
+    max-height: 0px;
+    opacity: 0%;
+  }
+  100% {
+    max-height: 100%;
+    opacity: 100%;
+  }
+}
+
+@keyframes make-hidden {
+  0% {
+    max-height: 100%;
+    opacity: 100%;
+  }
+  100% {
+    max-height: 0px;
+    opacity: 0%;
+  }
+}
+
+.titleized {
+  text-transform: capitalize;
 }

@@ -23,5 +23,7 @@ export default class Conditions {
   includedRaces = [];
   excludedRaces = [];
 
-  specificGender = "";
+  specificGender = "none";
+
+  stance = "none";
 }

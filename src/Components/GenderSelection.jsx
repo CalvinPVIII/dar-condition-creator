@@ -24,7 +24,7 @@ export default function LevelSelection() {
           <input
             type="radio"
             name="gender"
-            onChange={(e) => addGenders("", e.target.checked)}
+            onChange={(e) => addGenders("none", e.target.checked)}
           />
         </label>
         <label>

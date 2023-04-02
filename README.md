@@ -13,9 +13,10 @@
 - ~~Maybe rework the PluginItems checkboxes to be more like the RaceSelection checkboxes~~
 - Styling:
   - Weapon Types
-  - Drop downs in side menu
+  - ~~Drop downs in side menu~~
   - Home screen
   - Item selection?
+    - Rework item selection to support images?
   - Change app icon
 
 ### Known bugs
@@ -29,3 +30,4 @@
 - ~~Clicking an item in exclude mode switches back to add mode~~
 - ~~Duplicate items being add to the conditions when "check all" is clicked~~
 - File name not being added to conditions?
+- Misc tab in pop out not updating live

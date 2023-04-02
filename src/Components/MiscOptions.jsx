@@ -7,16 +7,9 @@ import ItemSelection from "./ItemSelection";
 import races from "../constants/races";
 import LevelSelection from "./LevelSelection";
 import GenderSelection from "./GenderSelection";
+import StanceSelection from "./StanceSelection";
 
 export default function MiscOptions() {
-  //   const { currentConditions, setCurrentConditions } =
-  //     useContext(ConditionsContext);
-
-  //   const addToConditions = (conditions) => {
-  //     const newConditions = { ...currentConditions, conditions };
-  //     console.log(newConditions);
-  //   };
-
   return (
     <>
       <h3>Add Misc Options</h3>
@@ -28,18 +21,13 @@ export default function MiscOptions() {
         />
       </div>
       <div className="gender-selection">
-        {/* <ItemSelection
-          includedArray={"includedGenders"}
-          excludedArray={"excludedGenders"}
-          items={[
-            { itemName: "male", itemId: 1 },
-            { itemName: "female", itemId: 2 },
-          ]}
-        /> */}
         <GenderSelection />
       </div>
       <div className="level-selection">
         <LevelSelection />
+      </div>
+      <div className="stance-selection">
+        <StanceSelection />
       </div>
     </>
   );
